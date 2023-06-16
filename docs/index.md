@@ -1,6 +1,6 @@
 ---
-title: Pumas-AI Workshop PLACEHOLDER
-description: CHANGE ME.
+title: Pumas-AI Workshop NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop
+description: Template for Pumas-AI Workshop NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop.
 ---
 
 [![CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-sa/4.0/)
@@ -9,10 +9,9 @@ Short summary about the workshop.
 
 !!! success "Prerequisites"
 
-    This workshop does PLACEHOLDER and PLACEHOLDER.
-    We recommend users being familiar with PLACEHOLDER, especially PLACEHOLDER.
+    We recommend users being familiar with the Pumas `@model` specification, how to parse data into a `Population`, and how to use the `fit` function.
 
-    The formal requirements are the PLACEHOLDER WORKSHOP WITH LINK.
+    The formal requirements are the [Pumas NLME Modeling Workshop](https://pumasai-labs.github.io/NLME-Model/).
 
 ## Schedule
 
