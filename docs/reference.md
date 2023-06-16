@@ -12,17 +12,25 @@ This can be either a markdown table or a list.
 
 | Action      | Command       | Observations          |
 | ----------- | ------------- | --------------------- |
-| placeholder | `placeholder` | this is a placeholder |
+| Parse data with covariates into a `Population` | `read_pumas(pkdatplaceholdera; covariates=[:covar1, :covar2, ...])` | `covariates` is a vector of column names where covariate data is stored in the `pkdata` `DataFrame` |
 
 ## Glossary
 
-`term1`
+Covariate
 
-: Definition of the term one above.
+: Any characteristic or feature that can impact the response to a drug. These could include demographic factors (like age, sex, or weight), disease characteristics (like disease stage or presence of other health conditions), genetic factors, or lab values (like liver function tests or kidney function tests).
 
-`term2`
+Creatinine clearance
 
-: Definition of the term two above.
+: Creatinine clearance is a measure used to assess the functioning of the kidneys. Specifically, it provides an estimate of the glomerular filtration rate (GFR), which is the rate at which the kidneys filter waste from the blood.
+
+Base model
+
+: A model without any covariate effects on its parameters. This represents the _null_ model against which covariate models can be tested after checking if covariate inclusion is helpful in our model.
+
+Allometric scaling
+
+: Allometric scaling is a method used to adjust pharmacokinetic parameters, such as clearance and volume of distribution, based on body size and composition.
 
 ## Get in touch
 
