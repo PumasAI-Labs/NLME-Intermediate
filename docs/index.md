@@ -25,8 +25,9 @@ The following Julia files are provided:
 !!! success "Prerequisites"
 
     We recommend users being familiar with the Pumas `@model` specification, how to parse data into a `Population`, and how to use the `fit` function.
+    Additionally users need to know how to perform model assessment and how to compare models.
 
-    The formal requirements are the [Pumas NLME Modeling Workshop](https://pumasai-labs.github.io/NLME-Model/).
+    The formal requirements are the [Pumas NLME Model Assessment Workshop](https://pumasai-labs.github.io/NLME-Assessment/).
 
 ## Schedule
 
