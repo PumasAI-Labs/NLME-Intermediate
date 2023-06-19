@@ -57,6 +57,32 @@ which should be given a result from a `inspect` function.
 Go over the plots comparing the three models.
 Finally, we also perform VPCs to help the model comparisson task.
 
+Now, proceed to the dose control parameters (DCP) workflow with the `02-dose_control.jl`.
+Here the idea is to showcase the new `@dosecontrol` block.
+Explain that this block allows for four special variables:
+
+- `lags`: the lag of the dose
+- `bioav`: the bioavailability of the dose
+- `duration`: the duration of the dose
+- `rate`: the rate of the dose
+
+These are specified with the syntax `dcp = (; Cmt=value)` where:
+
+- `dcp`: the dose control parameter (`lags`, `bioav`, `duration` or `rate`)
+- `Cmt`: the compartment where the DCP will be applied
+- `value`: value to use the for the DCP
+
+Here you will have three models to show learners.
+First, the `lags` model will have the `lags` as a DCP in the `@dosecontrol` block.
+Here you will explain how the learners can add compartments to which the `lags` will have an effect,
+and which value it will take.
+This is done with a `NamedTuple`.
+Second, the `bioav` model has a different DCP, `bioav`, but the logic is the same.
+Finally, the `lags_bioav` has two DCPs, `lags` and `bioav`.
+Here the idea is to showcase that you can not only have multiple compartments but also multiple DCPs.
+Be careful with random-effects (η) on the DCPs since those can include discontinuities in the objective function,
+and may give unstable estimates during the fitting procedure.
+
 ## Get in touch
 
 If you have any suggestions or want to get in touch with our education team,
