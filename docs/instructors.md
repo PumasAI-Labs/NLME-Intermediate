@@ -83,6 +83,25 @@ Here the idea is to showcase that you can not only have multiple compartments bu
 Be careful with random-effects (η) on the DCPs since those can include discontinuities in the objective function,
 and may give unstable estimates during the fitting procedure.
 
+Finally, we'll move into indirect response models, and also into PD models.
+Proceed to the `03-indirect_response.jl` file.
+Here the `pkdata` has two columns of observations: the `:dv` and the `:resp` columns.
+Explain that the `:dv` is for the PK measurements and the `:resp` for the PD measurements.
+It is important to emphasize that this wide column format it the only difference in data format that Pumas diverges from NM-TRAN.
+Now, walkthrough the model definition.
+Make sure that learners understand the different PK and PD components in the `@param`,
+`@random`, `@pre` and `@derived` block.
+There are two new model blocks that learners might not have been exposed yet: `@init` and `@vars`.
+The `@init` block has the purpose of defining initial values for the subjects compartments.
+The compartment always has a initial value of `0` or the dosing event at time `0` if not specified with `@init`.
+In the `@init` in the model we are only specifying initial values for the PD compartment `Resp`.
+The `@vars` block is used to define aliases that can be used in the `@dynamics` and `@derived` blocks.
+These aliases can use any variable defined in the `@pre` and `@covariates` block and any Julia variable or value,
+user-defined or not.
+This is a good way to declutter your ODE equations in the `@dynamics` block.
+Finally, showcase that you can have a GoF plot for each observation separated.
+The important part here is to showcase the flexibility and ease-of-use of Pumas modeling syntax to define complex models without overloading the user.
+
 ## Get in touch
 
 If you have any suggestions or want to get in touch with our education team,

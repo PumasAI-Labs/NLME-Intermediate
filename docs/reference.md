@@ -12,9 +12,12 @@ This can be either a markdown table or a list.
 
 | Action      | Command       | Observations          |
 | ----------- | ------------- | --------------------- |
-| Parse data with covariates into a `Population` | `read_pumas(pkdatplaceholdera; covariates=[:covar1, :covar2, ...])` | `covariates` is a vector of column names where covariate data is stored in the `pkdata` `DataFrame` |
+| Parse data with covariates into a `Population` | `read_pumas(pkdata; covariates=[:covar1, :covar2, ...])` | `covariates` is a vector of column names where covariate data is stored in the `pkdata` `DataFrame` |
 | Add covariates to a model | `@covariates covar1 covar2 ...` | The `@covariates` block should be used inside a model. Also note that the matching `Population` used in the `fit` with the desired model should also have the same covariates available |
 | Add a dose control parameter to a model | `@dosecontrol begin dcp = (; Cmt=value) end` | The `@dosecontrol` block should be used inside a model. `dcp` is a dose control parameter (`lags`, `bioav`, `rate` or `duration`) and `Cmt` is the compartment name where the DCP effect should be applied and `value` is the value of the effect. You can have multiples `Cmt`s and also multiples `dcp`s. |
+| Parse data with multiple observations into a `Population` | `read_pumas(pkdata; observations=[:obs1, :obs2, ...])` | `observations` is a vector of column names where observation data is stored in the `pkdata` `DataFrame` |
+| Define initial values for compartments in a model | `@init begin Cmt = value end` | The compartment always has a initial value of 0 or the dosing event at time 0 if not specified with `@init` | 
+| Define aliases for the `@dynamics` and `@derived` block | `@vars begin alias = value end` | These are used mainly to declutter your ODEs in the `@dynamics` block | 
 
 ## Glossary
 
@@ -53,6 +56,10 @@ Rate of the dose
 Duration of the dose
 
 : Length of time that drug concentrations remain within the therapeutic range after a dose is administered.
+
+Indirect response model (IDR)
+
+: Type of pharmacodynamic model used to describe situations where a drug's effect occurs through a mechanism separate from the drug's direct action on a biological target. In other words, the drug doesn't act directly on the response, but influences it indirectly, often by modulating a rate of production or loss of the measured response. These models are often used when there is a delay between drug concentration and observable effect, or when the drug effect is believed to act through some intermediary process.
 
 ## Get in touch
 
