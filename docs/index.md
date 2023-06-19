@@ -1,5 +1,5 @@
 ---
-title: Pumas-AI Workshop NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop
+title: Pumas-AI NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop
 description: Template for Pumas-AI Workshop NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop.
 ---
 
