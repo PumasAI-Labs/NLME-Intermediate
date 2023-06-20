@@ -16,7 +16,7 @@ This can be either a markdown table or a list.
 | Add covariates to a model | `@covariates covar1 covar2 ...` | The `@covariates` block should be used inside a model. Also note that the matching `Population` used in the `fit` with the desired model should also have the same covariates available |
 | Add a dose control parameter to a model | `@dosecontrol begin dcp = (; Cmt=value) end` | The `@dosecontrol` block should be used inside a model. `dcp` is a dose control parameter (`lags`, `bioav`, `rate` or `duration`) and `Cmt` is the compartment name where the DCP effect should be applied and `value` is the value of the effect. You can have multiples `Cmt`s and also multiples `dcp`s. |
 | Parse data with multiple observations into a `Population` | `read_pumas(pkdata; observations=[:obs1, :obs2, ...])` | `observations` is a vector of column names where observation data is stored in the `pkdata` `DataFrame` |
-| Define initial values for compartments in a model | `@init begin Cmt = value end` | The compartment always has a initial value of 0 or the dosing event at time 0 if not specified with `@init` | 
+| Define initial values for compartments in a model | `@init begin Cmt = value end` | The compartment always has an initial value of 0 or the dosing event at time 0 if not specified with `@init` | 
 | Define aliases for the `@dynamics` and `@derived` block | `@vars begin alias = value end` | These are used mainly to declutter your ODEs in the `@dynamics` block | 
 
 ## Glossary

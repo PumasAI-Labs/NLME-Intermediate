@@ -57,7 +57,7 @@ param_lags = (;
 
 fit_lags = fit(lags, pop, param_lags, FOCE())
 
-# Bioavaliability dosecontrol model
+# Bioavailability dosecontrol model
 bioav = @model begin
     @param begin
         tvka ∈ RealDomain(lower=0)
@@ -101,7 +101,7 @@ param_bioav = (;
 
 fit_bioav = fit(bioav, pop, param_bioav, FOCE())
 
-# Lags + Bioavaliability dosecontrol model
+# Lags + Bioavailability dosecontrol model
 lags_bioav = @model begin
     @param begin
         tvka ∈ RealDomain(lower=0)
@@ -147,4 +147,4 @@ param_lags_bioav = (;
     σ_prop=0.015,
 )
 
-fit_lags_bioav = fit(lags_bioav, pop, param_bioav, FOCE())
+fit_lags_bioav = fit(lags_bioav, pop, param_lags_bioav, FOCE())

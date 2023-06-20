@@ -10,10 +10,10 @@ It covers:
 
 - **Covariate Model Building**
 - **Dose Control Parameters**:
-  - `lags`: lag of the dose
-  - `bioav`: bioavailability of the dose
-  - `rate`: rate of the dosing
-  - `duration`: duration of the dose
+      - `lags`: lag of the dose
+      - `bioav`: bioavailability of the dose
+      - `rate`: rate of the dosing
+      - `duration`: duration of the dose
 - **PKPD Indirect Response Models**
 
 The following Julia files are provided:

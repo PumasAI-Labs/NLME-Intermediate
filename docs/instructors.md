@@ -55,7 +55,7 @@ Additionally, we should inspect the goodness of fit of the model.
 This is done with the plotting function `goodness_of_fit`,
 which should be given a result from a `inspect` function.
 Go over the plots comparing the three models.
-Finally, we also perform VPCs to help the model comparisson task.
+Finally, we also perform VPCs to help the model comparison task.
 
 Now, proceed to the dose control parameters (DCP) workflow with the `02-dose_control.jl`.
 Here the idea is to showcase the new `@dosecontrol` block.
@@ -93,7 +93,7 @@ Make sure that learners understand the different PK and PD components in the `@p
 `@random`, `@pre` and `@derived` block.
 There are two new model blocks that learners might not have been exposed yet: `@init` and `@vars`.
 The `@init` block has the purpose of defining initial values for the subjects compartments.
-The compartment always has a initial value of `0` or the dosing event at time `0` if not specified with `@init`.
+The compartment always has an initial value of `0` or the dosing event at time `0` if not specified with `@init`.
 In the `@init` in the model we are only specifying initial values for the PD compartment `Resp`.
 The `@vars` block is used to define aliases that can be used in the `@dynamics` and `@derived` blocks.
 These aliases can use any variable defined in the `@pre` and `@covariates` block and any Julia variable or value,
