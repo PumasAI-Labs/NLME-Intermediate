@@ -7,8 +7,8 @@ title: Reference Sheets for Pumas-AI NLME Covariates, Dose Control Parameters, a
 ## Key Points
 
 - You can parse covariates while reading a `DataFrame` with the `covariates` keyword argument in `read_pumas`.
-- Covariates can be included in a Pumas model with the `@covariates` block and used throughtout.
-- Dose control parameters can be defined in the `@dosecontro` in a Pumas model.
+- Covariates can be included in a Pumas model with the `@covariates` block and used throughout.
+- Dose control parameters can be defined in the `@dosecontrol` in a Pumas model.
 - Indirect response models, and other PKPD models, can be defined in one joint Pumas model using the model blocks for both PK and PD components.
 - You can set the subjects' initial compartment values with the `@init` model block.
 - The `@vars` model block allows you to define aliases that can help decluttering your ODEs in the `@dynamics` block.
