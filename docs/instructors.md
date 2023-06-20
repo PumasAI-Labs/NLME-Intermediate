@@ -87,7 +87,7 @@ Finally, we'll move into indirect response models, and also into PD models.
 Proceed to the `03-indirect_response.jl` file.
 Here the `pkdata` has two columns of observations: the `:dv` and the `:resp` columns.
 Explain that the `:dv` is for the PK measurements and the `:resp` for the PD measurements.
-It is important to emphasize that this wide column format it the only difference in data format that Pumas diverges from NM-TRAN.
+It is important to emphasize that this wide column format is the only difference in data format that Pumas diverges from NM-TRAN.
 Now, walkthrough the model definition.
 Make sure that learners understand the different PK and PD components in the `@param`,
 `@random`, `@pre` and `@derived` block.
