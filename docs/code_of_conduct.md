@@ -1,5 +1,5 @@
 ---
-title: Code of Conduct for Pumas-AI Workshop PLACEHOLDER
+title: Code of Conduct for Pumas-AI NLME Covariates, Dose Control Parameters, and PKPD Indirect Response Models Workshop
 description: Participants and Instructors must follow this at all times.
 ---
 
