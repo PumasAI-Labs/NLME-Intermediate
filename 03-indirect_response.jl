@@ -167,8 +167,7 @@ iparams_pd = (
 
 pd_fit = fit(pd_model, pop_pd, iparams_pd, FOCE())
 
-pkpd_inspect = inspect(pkpd_fit)
+pd_inspect = inspect(pd_fit)
 
-# Plotting a GoF for each type of observation separately
-goodness_of_fit(pkpd_inspect; ols=false, observations=[:dv])
-goodness_of_fit(pkpd_inspect; ols=false, observations=[:resp])
+# Plotting a GoF
+goodness_of_fit(pd_inspect; ols=false)
