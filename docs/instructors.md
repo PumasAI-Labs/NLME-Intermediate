@@ -87,9 +87,13 @@ Finally, we'll move into indirect response models, and also into PD models.
 Proceed to the `03-indirect_response.jl` file.
 Here the `pkdata` has two columns of observations: the `:dv` and the `:resp` columns.
 Explain that the `:dv` is for the PK measurements and the `:resp` for the PD measurements.
-It is important to emphasize that this wide column format is the only difference in data format that Pumas diverges from NM-TRAN.
-Now, walkthrough the model definition.
-Make sure that learners understand the different PK and PD components in the `@param`,
+This is a sequential PD model.
+That means, that we'll fit first the PK part of the model.
+The PK model is not different from the models that learners have experienced in the pre-requisites of this workshop.
+Then, we proceed by extracting the PK individual parameters from the fit and merging to the original data.
+We read the updated data into a `Population` and pass the PK individual parameters as covariates in the `read_pumas` function.
+Now, walkthrough the PD model definition.
+Make sure that learners understand the different PD components in the `@param`,
 `@random`, `@pre` and `@derived` block.
 There are two new model blocks that learners might not have been exposed yet: `@init` and `@vars`.
 The `@init` block has the purpose of defining initial values for the subjects compartments.
@@ -99,7 +103,7 @@ The `@vars` block is used to define aliases that can be used in the `@dynamics` 
 These aliases can use any variable defined in the `@pre` and `@covariates` block and any Julia variable or value,
 user-defined or not.
 This is a good way to declutter your ODE equations in the `@dynamics` block.
-Finally, showcase that you can have a GoF plot for each observation separated.
+Finally, showcase a GoF plot for the PD inspect result.
 The important part here is to showcase the flexibility and ease-of-use of Pumas modeling syntax to define complex models without overloading the user.
 
 ## Get in touch
