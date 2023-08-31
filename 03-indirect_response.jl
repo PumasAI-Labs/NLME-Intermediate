@@ -14,20 +14,17 @@ pkdata = dataset("inf_sd_5_idr")
 # one for eacn observation using the
 # `observations` keyword argument
 # PD pop is a little bit further below
-pop_pk = read_pumas(
-  pkdata;
-  observations=[:dv]
-)
+pop_pk = read_pumas(pkdata; observations = [:dv])
 
 # This is a PK model
 pk_model = @model begin
   @param begin
-    tvcl ∈ RealDomain(; lower=0)
-    tvvc ∈ RealDomain(; lower=0)
-    tvq ∈ RealDomain(; lower=0)
-    tvvp ∈ RealDomain(; lower=0)
+    tvcl ∈ RealDomain(; lower = 0)
+    tvvc ∈ RealDomain(; lower = 0)
+    tvq ∈ RealDomain(; lower = 0)
+    tvvp ∈ RealDomain(; lower = 0)
     Ω ∈ PDiagDomain(4)
-    σ_prop ∈ RealDomain(; lower=0)
+    σ_prop ∈ RealDomain(; lower = 0)
   end
 
   @random begin
@@ -54,12 +51,12 @@ end
 
 # PK initial parameter values
 iparams_pk = (
-  tvcl=1.5,
-  tvvc=25.0,
-  tvq=5.0,
-  tvvp=150.0,
-  Ω=Diagonal([0.05, 0.05, 0.05, 0.05]),
-  σ_prop=0.15,
+  tvcl = 1.5,
+  tvvc = 25.0,
+  tvq = 5.0,
+  tvvp = 150.0,
+  Ω = Diagonal([0.05, 0.05, 0.05, 0.05]),
+  σ_prop = 0.15,
 )
 
 # Now we fit the PK model
@@ -72,35 +69,26 @@ indpars = DataFrame(icoef(pk_fit))
 # A little bit of parsing for the :id column
 @rtransform! indpars :id = parse(Int64, :id)
 # Merge the PK individual parameters with the original dataset
-leftjoin!(pkdata, indpars; on=:id)
+leftjoin!(pkdata, indpars; on = :id)
 # Some more data wrangling: renaming the PK columns
-rename!(
-  pkdata,
-  :CL => :iCL,
-  :Vc => :iVc,
-  :Q => :iQ,
-  :Vp => :iVp
-)
+rename!(pkdata, :CL => :iCL, :Vc => :iVc, :Q => :iQ, :Vp => :iVp)
 
 # Now we can read the data into a
 # PD Population with the
 # PK individual parameters as covariates
-pop_pd = read_pumas(
-  pkdata;
-  observations=[:resp],
-  covariates=[:iCL, :iVc, :iQ, :iVp, :BSL]
-)
+pop_pd =
+  read_pumas(pkdata; observations = [:resp], covariates = [:iCL, :iVc, :iQ, :iVp, :BSL])
 
 # This is a sequential PD model
 # We are using the PK individual parameters
 # as covariates
 pd_model = @model begin
   @param begin
-    tvturn ∈ RealDomain(; lower=0)
-    tvebase ∈ RealDomain(; lower=0)
-    tvec50 ∈ RealDomain(; lower=0)
+    tvturn ∈ RealDomain(; lower = 0)
+    tvebase ∈ RealDomain(; lower = 0)
+    tvec50 ∈ RealDomain(; lower = 0)
     Ω ∈ PDiagDomain(1)
-    σ_add ∈ RealDomain(; lower=0)
+    σ_add ∈ RealDomain(; lower = 0)
   end
 
   @random begin
@@ -155,17 +143,11 @@ pd_model = @model begin
 end
 
 # PD initial parameter values
-iparams_pd = (
-  tvturn=10,
-  tvebase=10,
-  tvec50=0.3,
-  Ω=Diagonal([0.05]),
-  σ_add=0.5,
-)
+iparams_pd = (tvturn = 10, tvebase = 10, tvec50 = 0.3, Ω = Diagonal([0.05]), σ_add = 0.5)
 
 pd_fit = fit(pd_model, pop_pd, iparams_pd, FOCE())
 
 pd_inspect = inspect(pd_fit)
 
 # Plotting a GoF
-goodness_of_fit(pd_inspect; ols=false)
+goodness_of_fit(pd_inspect; ols = false)
