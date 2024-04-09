@@ -18,45 +18,45 @@ pop_pk = read_pumas(pkdata; observations = [:dv])
 
 # This is a PK model
 pk_model = @model begin
-  @param begin
-    tvcl ∈ RealDomain(; lower = 0)
-    tvvc ∈ RealDomain(; lower = 0)
-    tvq ∈ RealDomain(; lower = 0)
-    tvvp ∈ RealDomain(; lower = 0)
-    Ω ∈ PDiagDomain(4)
-    σ_prop ∈ RealDomain(; lower = 0)
-  end
+    @param begin
+        tvcl ∈ RealDomain(; lower = 0)
+        tvvc ∈ RealDomain(; lower = 0)
+        tvq ∈ RealDomain(; lower = 0)
+        tvvp ∈ RealDomain(; lower = 0)
+        Ω ∈ PDiagDomain(4)
+        σ_prop ∈ RealDomain(; lower = 0)
+    end
 
-  @random begin
-    η ~ MvNormal(Ω)
-  end
+    @random begin
+        η ~ MvNormal(Ω)
+    end
 
-  @pre begin
-    CL = tvcl * exp(η[1])
-    Vc = tvvc * exp(η[2])
-    Q = tvq * exp(η[3])
-    Vp = tvvp * exp(η[4])
-  end
+    @pre begin
+        CL = tvcl * exp(η[1])
+        Vc = tvvc * exp(η[2])
+        Q = tvq * exp(η[3])
+        Vp = tvvp * exp(η[4])
+    end
 
-  @dynamics begin
-    Central' = -(CL / Vc) * Central + (Q / Vp) * Peripheral - (Q / Vc) * Central
-    Peripheral' = (Q / Vc) * Central - (Q / Vp) * Peripheral
-  end
+    @dynamics begin
+        Central' = -(CL / Vc) * Central + (Q / Vp) * Peripheral - (Q / Vc) * Central
+        Peripheral' = (Q / Vc) * Central - (Q / Vp) * Peripheral
+    end
 
-  @derived begin
-    conc := @. Central / Vc
-    dv ~ @. Normal(conc, conc * σ_prop)
-  end
+    @derived begin
+        conc := @. Central / Vc
+        dv ~ @. Normal(conc, conc * σ_prop)
+    end
 end
 
 # PK initial parameter values
 iparams_pk = (
-  tvcl = 1.5,
-  tvvc = 25.0,
-  tvq = 5.0,
-  tvvp = 150.0,
-  Ω = Diagonal([0.05, 0.05, 0.05, 0.05]),
-  σ_prop = 0.15,
+    tvcl = 1.5,
+    tvvc = 25.0,
+    tvq = 5.0,
+    tvvp = 150.0,
+    Ω = Diagonal([0.05, 0.05, 0.05, 0.05]),
+    σ_prop = 0.15,
 )
 
 # Now we fit the PK model
@@ -77,69 +77,69 @@ rename!(pkdata, :CL => :iCL, :Vc => :iVc, :Q => :iQ, :Vp => :iVp)
 # PD Population with the
 # PK individual parameters as covariates
 pop_pd =
-  read_pumas(pkdata; observations = [:resp], covariates = [:iCL, :iVc, :iQ, :iVp, :BSL])
+    read_pumas(pkdata; observations = [:resp], covariates = [:iCL, :iVc, :iQ, :iVp, :BSL])
 
 # This is a sequential PD model
 # We are using the PK individual parameters
 # as covariates
 pd_model = @model begin
-  @param begin
-    tvturn ∈ RealDomain(; lower = 0)
-    tvebase ∈ RealDomain(; lower = 0)
-    tvec50 ∈ RealDomain(; lower = 0)
-    Ω ∈ PDiagDomain(1)
-    σ_add ∈ RealDomain(; lower = 0)
-  end
+    @param begin
+        tvturn ∈ RealDomain(; lower = 0)
+        tvebase ∈ RealDomain(; lower = 0)
+        tvec50 ∈ RealDomain(; lower = 0)
+        Ω ∈ PDiagDomain(1)
+        σ_add ∈ RealDomain(; lower = 0)
+    end
 
-  @random begin
-    η ~ MvNormal(Ω)
-  end
+    @random begin
+        η ~ MvNormal(Ω)
+    end
 
-  @covariates iCL iVc iQ iVp BSL
+    @covariates iCL iVc iQ iVp BSL
 
-  @pre begin
-    # PK individual parameters
-    CL = iCL
-    Vc = iVc
-    Q = iQ
-    Vp = iVp
+    @pre begin
+        # PK individual parameters
+        CL = iCL
+        Vc = iVc
+        Q = iQ
+        Vp = iVp
 
-    # PD individual parameters
-    ebase = tvebase * exp(η[1])
-    ec50 = tvec50
-    emax = 1
-    turn = tvturn
-    kout = 1 / turn
-    kin0 = ebase * kout
-  end
+        # PD individual parameters
+        ebase = tvebase * exp(η[1])
+        ec50 = tvec50
+        emax = 1
+        turn = tvturn
+        kout = 1 / turn
+        kin0 = ebase * kout
+    end
 
-  # This is a new block
-  # It has the purpose to define, for each subject,
-  # the compartments initial values
-  # These can be either a fixed value or a parameter-based value
-  @init begin
-    Resp = ebase
-  end
+    # This is a new block
+    # It has the purpose to define, for each subject,
+    # the compartments initial values
+    # These can be either a fixed value or a parameter-based value
+    @init begin
+        Resp = ebase
+    end
 
-  # This is a new block
-  # It is used to define aliases for any operation based on parameters or values
-  # to be used in the `@dynamics` and `@derived` blocks in order to avoid too much cluttering
-  @vars begin
-    conc := Central / Vc
-    edrug := emax * conc / (ec50 + conc)
-    kin := kin0 * (1 - edrug)
-  end
+    # This is a new block
+    # It is used to define aliases for any operation based on parameters or values
+    # to be used in the `@dynamics` and `@derived` blocks in order to avoid too much cluttering
+    @vars begin
+        conc := Central / Vc
+        edrug := emax * conc / (ec50 + conc)
+        kin := kin0 * (1 - edrug)
+    end
 
-  # Both PK and PD ODEs
-  @dynamics begin
-    Central' = -(CL / Vc) * Central + (Q / Vp) * Peripheral - (Q / Vc) * Central
-    Peripheral' = (Q / Vc) * Central - (Q / Vp) * Peripheral
-    Resp' = kin - kout * Resp
-  end
+    # Both PK and PD ODEs
+    @dynamics begin
+        Central' = -(CL / Vc) * Central + (Q / Vp) * Peripheral - (Q / Vc) * Central
+        Peripheral' = (Q / Vc) * Central - (Q / Vp) * Peripheral
+        Resp' = kin - kout * Resp
+    end
 
-  @derived begin
-    resp ~ @. Normal(Resp, σ_add)
-  end
+    @derived begin
+        resp ~ @. Normal(Resp, σ_add)
+    end
 end
 
 # PD initial parameter values
